@@ -1,6 +1,7 @@
 package com.spring.blog.service;
 
 import com.spring.blog.dto.PostResponse;
+import com.spring.blog.dto.PostResponseById;
 import com.spring.blog.dto.Postdto;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public interface PostService {
     //    List<Postdto> getAllPost(int pageNo, int pageSize);
     PostResponse getAllPost(int pageNo, int pageSize);
 
-    Postdto getPostById(long id);
+    PostResponseById getPostById(long id);
 
     Postdto updatePost(Postdto postdto, long id);
 

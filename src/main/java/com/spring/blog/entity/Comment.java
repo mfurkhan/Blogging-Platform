@@ -1,5 +1,7 @@
 package com.spring.blog.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,6 +20,8 @@ public class Comment {
 
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", nullable = false)
+    @JsonManagedReference
+    @JsonIgnore
     private Post post;
 
  /*
@@ -30,12 +34,14 @@ public class Comment {
 
  */
 
- /*In the Comment entity, the post field is annotated with @ManyToOne to represent
- the many-to-one relationship with the Post entity.
+    /**
+     *     In the Comment entity, the post field is annotated with @ManyToOne to represent
+     *  the many-to-one relationship with the Post entity.
+     *
+     * The @JoinColumn annotation is used to specify the column name
+     *  (post_id) in the Book table that will act as the foreign key referencing
+     *  the primary key column ('id') of the Author table.
+      */
 
-The @JoinColumn annotation is used to specify the column name
- (post_id) in the Book table that will act as the foreign key referencing
- the primary key column ('id') of the Author table.
 
- */
 }

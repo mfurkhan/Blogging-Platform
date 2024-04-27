@@ -1,6 +1,7 @@
 package com.spring.blog.service.impl;
 
 import com.spring.blog.dto.PostResponse;
+import com.spring.blog.dto.PostResponseById;
 import com.spring.blog.dto.Postdto;
 import com.spring.blog.entity.Post;
 import com.spring.blog.exception.ResourceNotFoundException;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,9 +57,14 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Postdto getPostById(long id) {
+    public PostResponseById getPostById(long id) {
         Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
-        return mapToDTO(post);
+        Postdto content = mapToDTO(post);
+        List<Postdto> postdtos = new ArrayList<>();
+        postdtos.add(content);
+        PostResponseById response = new PostResponseById();
+        response.setContent(postdtos);
+        return response;
     }
 
     @Override
