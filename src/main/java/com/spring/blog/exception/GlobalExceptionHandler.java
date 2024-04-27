@@ -16,31 +16,34 @@ public class GlobalExceptionHandler {
 
     //This is to handle specific exceptions
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ErrorDetails> handleResourceNotFoundException (ResourceNotFoundException exception,
-                                                                         WebRequest webRequest){
+    public ResponseEntity<ErrorDetails> handleResourceNotFoundException(ResourceNotFoundException exception,
+                                                                        WebRequest webRequest) {
         ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(),
                 webRequest.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
+
     @ExceptionHandler(BlogAPIException.class)
-    public ResponseEntity<ErrorDetails> handleBlogAPIException (BlogAPIException exception,
-                                                                         WebRequest webRequest){
+    public ResponseEntity<ErrorDetails> handleBlogAPIException(BlogAPIException exception,
+                                                               WebRequest webRequest) {
         ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(),
                 webRequest.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
+
     //This is to handle Global Exception
-    @ExceptionHandler(Exception.class) //By default, every exception extends Exception, so any exception occurred is handled here
-    public ResponseEntity<ErrorDetails> handleBlogAPIException (Exception exception,
-                                                                WebRequest webRequest){
+    @ExceptionHandler(Exception.class)
+    //By default, every exception extends Exception, so any exception occurred is handled here
+    public ResponseEntity<ErrorDetails> handleBlogAPIException(Exception exception,
+                                                               WebRequest webRequest) {
         ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(),
                 webRequest.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<ErrorDetails> handleAccessDeniedException (AccessDeniedException exception,
-                                                                         WebRequest webRequest){
+    public ResponseEntity<ErrorDetails> handleAccessDeniedException(AccessDeniedException exception,
+                                                                    WebRequest webRequest) {
         ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(),
                 webRequest.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.UNAUTHORIZED);
