@@ -7,6 +7,7 @@ import com.spring.blog.entity.User;
 import com.spring.blog.exception.BlogAPIException;
 import com.spring.blog.repository.RolesRepository;
 import com.spring.blog.repository.UserRepository;
+import com.spring.blog.security.JwtTokenProvider;
 import com.spring.blog.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,15 +32,16 @@ public class AuthServiceImpl implements AuthService {
     private RolesRepository rolesRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    JwtTokenProvider jwtTokenProvider;
     @Override
     public String login(LoginDto loginDto) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginDto.getUsernameOrEmail(), loginDto.getPassword()
         ));
-
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return "User logged-in Successfully: ";
+        String token = jwtTokenProvider.generateToken(authentication);
+        return token;
     }
 
     @Override
