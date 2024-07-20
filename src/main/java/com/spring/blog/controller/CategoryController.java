@@ -4,6 +4,10 @@ import com.spring.blog.dto.CategoryDto;
 import com.spring.blog.dto.CategoryResponse;
 import com.spring.blog.entity.Category;
 import com.spring.blog.service.CategoryService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +16,25 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/categories")
+@Tag(
+        name = "CRUD operations for Category feature"
+)
 public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
 
+    @SecurityRequirement(
+            name = "Bearer Authentication"
+    )
+    @Operation(
+            summary = "Creates Comment REST API",
+            description = "Create REST APi is used to save the comment details in the database"
+    )
+    @ApiResponse(
+            responseCode = "201",
+            description = "HTTP Status 201 created"
+    )
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<CategoryDto> createCategory (@RequestBody CategoryDto categoryDto) {
@@ -34,6 +52,9 @@ public class CategoryController {
         return categoryService.getAllCategory();
     }
 
+    @SecurityRequirement(
+            name = "Bearer Authentication"
+    )
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("{id}")
     public ResponseEntity<CategoryDto> updateCategory (@RequestBody CategoryDto categoryDto,
@@ -42,6 +63,9 @@ public class CategoryController {
         return new ResponseEntity<>(category, HttpStatus.CREATED);
     }
 
+    @SecurityRequirement(
+            name = "Bearer Authentication"
+    )
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteCategory (@PathVariable ("id") Long categoryId){

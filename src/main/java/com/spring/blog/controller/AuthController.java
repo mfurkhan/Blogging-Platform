@@ -4,6 +4,7 @@ import com.spring.blog.dto.JwtAuthResponse;
 import com.spring.blog.dto.LoginDto;
 import com.spring.blog.dto.RegisterDto;
 import com.spring.blog.service.AuthService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
+@Tag(
+        name = "CRUD operations for Authorization feature"
+)
 public class AuthController {
     @Autowired
     AuthService authService;
